@@ -1,0 +1,484 @@
+/* 全局通用 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: #030303;
+  color: #fff;
+}
+
+/* 布局容器 */
+.container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+/* 左侧侧边栏 */
+.sidebar {
+  background: #030303;
+  padding: 20px;
+  border-right: 1px solid #282828;
+  overflow-y: auto;
+}
+
+/* 主内容区域 */
+.main {
+  padding: 24px 32px;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+}
+
+/* logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  animation: fadeInDown 0.6s ease;
+}
+
+/* 导航项 */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item:hover {
+  background: #282828;
+  transform: translateX(5px);
+}
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+/* 分割标题 */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* 添加播放列表按钮 */
+.add-playlist {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-playlist:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 播放列表 */
+.sidebar-playlist {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #aaa;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-playlist:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 20px;
+}
+
+.sidebar-playlist svg {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-playlist:hover svg {
+  transform: scale(1.2) rotate(8deg);
+  fill: #ff0000;
+}
+
+.sidebar-playlist::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: 0.5s ease;
+}
+
+.sidebar-playlist:hover::before {
+  left: 100%;
+}
+
+/* 侧边栏中分割块 */
+.sidebar-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #282828;
+  animation: fadeIn 0.6s ease;
+}
+
+/* 播放器底部固定 */
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 24px;
+  z-index: 100;
+  animation: slideUp 0.6s ease;
+}
+
+.player .song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player .song-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background-size: cover;
+  background-position: center;
+}
+
+.player .song-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.player .song-artist {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* 播放器控制区域 */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.control-buttons svg {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.control-buttons svg:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.control-buttons svg:nth-child(2) {
+  width: 40px;
+  height: 40px;
+}
+
+.control-buttons svg:first-child,
+.control-buttons svg:last-child {
+  width: 24px;
+  height: 24px;
+}
+
+/* 进度条 */
+.progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ff0000;
+  border-radius: 2px;
+  position: relative;
+}
+
+/* 音量控制 */
+.volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+  min-width: 150px;
+}
+
+.volume {
+  width: 100px;
+}
+
+.controls svg {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.controls svg:hover {
+  transform: scale(1.1);
+  fill: #ff0000;
+}
+
+/* 顶部搜索栏 */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 100%;
+  padding: 10px 40px 10px 48px;
+  background: #282828;
+  border: none;
+  border-radius: 24px;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search:focus {
+  outline: none;
+  background: #404040;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-icon:hover {
+  color: #fff;
+}
+
+.search-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 歌曲列表 */
+.songs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+  animation: fadeIn 0.8s ease;
+}
+
+.song-card {
+  border-radius: 8px;
+  padding: 0;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+}
+
+.song-card:hover {
+  transform: translateY(-5px);
+}
+
+.song-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.song-card .text-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 8px 8px;
+}
+
+.song-title {
+  font-weight: 500;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.song-artist {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.song-image::after {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  color: white;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.6);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.song-card:hover .song-image::after {
+  transform: translate(-50%, -50%) scale(1);
+  background: rgba(255, 0, 0, 0.9);
+}
+
+/* 分类标签 */
+.category-chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  animation: fadeIn 0.6s ease;
+}
+
+.chip {
+  padding: 8px 16px;
+  background: #282828;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  background: #404040;
+  transform: translateY(-2px);
+}
+
+.chip.active {
+  background: #ff0000;
+}
+
+/* 小标题 */
+.section-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: fadeIn 0.6s ease;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(80px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
